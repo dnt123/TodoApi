@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using TodoApi.Models;
 
 namespace TodoApi.Controllers
@@ -25,6 +31,7 @@ namespace TodoApi.Controllers
 
         [HttpGet]
         [Route("isalive")]
+        [Authorize]
         public ActionResult isalive()
         {
             return Ok();
@@ -35,6 +42,16 @@ namespace TodoApi.Controllers
         public ActionResult<List<TodoItem>> GetAll()
         {
             return _context.TodoItems.ToList();
+        }
+
+        [HttpGet]
+        [Produces("application/json")]
+        [Route("token")]
+        public ObjectResult Testing() {
+            ObjectResult o
+                 = new ObjectResult(GenerateToken());
+          //  o.Value = "skrivom";
+            return o;
         }
 
 
@@ -89,6 +106,28 @@ namespace TodoApi.Controllers
             _context.TodoItems.Remove(todo);
             _context.SaveChanges();
             return NoContent();
+        }
+
+
+        private static string GenerateToken()
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            var claims = new[]
+            {
+                 new Claim("test", "test")
+             };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("test123456789#########"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+             issuer: "yourdomain.com",
+             audience: "yourdomain.com",
+             claims: claims,
+             expires: DateTime.Now.AddMinutes(30),
+             signingCredentials: creds);
+
+            return handler.WriteToken(token);
         }
 
     }
