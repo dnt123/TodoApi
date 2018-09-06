@@ -63,7 +63,7 @@ namespace ConsoleApp1
             {
                  new Claim("test", "test")
              };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("test"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("test123456789#########"));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
