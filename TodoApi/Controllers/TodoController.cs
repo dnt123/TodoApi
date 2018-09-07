@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,14 @@ namespace TodoApi.Controllers
     public class TodoController : ControllerBase
     {
         private readonly TodoContext _context;
+        private readonly IConfiguration _configuration;
 
-        public TodoController(TodoContext context)
+
+        public TodoController(TodoContext context, IConfiguration configuration)
         {
 
-            _context = context; 
+            _context = context;
+            _configuration = configuration;
 
             if (_context.TodoItems.Count() == 0)
             {
@@ -109,7 +113,7 @@ namespace TodoApi.Controllers
         }
 
 
-        private static string GenerateToken()
+        private string GenerateToken()
         {
             var handler = new JwtSecurityTokenHandler();
 
@@ -117,8 +121,9 @@ namespace TodoApi.Controllers
             {
                  new Claim("test", "test")
              };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("test123456789#########"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SecurityKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            
 
             var token = new JwtSecurityToken(
              issuer: "yourdomain.com",

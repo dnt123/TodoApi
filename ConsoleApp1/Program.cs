@@ -14,44 +14,34 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-
-            client.DefaultRequestHeaders.Authorization = System.Net.Http.Headers.AuthenticationHeaderValue.Parse("Bearer");
-            string s = GenerateToken();
+            Item todoItem = new Item();
+            todoItem.Id = 1;
+            todoItem.Name = "Name";
+            todoItem.IsComplete = true;
+            Console.WriteLine(todoItem.ToString());
+           
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", GenerateToken());
 
             client.BaseAddress = new Uri("https://localhost:44352");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            
-            Console.WriteLine("Hello World!");
-            RunAsync().Wait();
+           
+            Console.WriteLine(GenerateToken());
+            TestingToken().Wait();
           
            
         }
-        static async Task RunAsync()
+
+        static async Task TestingToken()
         {
-                // Get the product
-                await GetProductAsync();
-        }
-
-        static async Task GetProductAsync()
-        {
-           
-         //   System.Net.Http.HttpResponseMessage response = await client.GetAsync("/api/todo");
-         //   if (response.IsSuccessStatusCode)
-
-          //  {
-                var stringTask = client.GetStringAsync("api/todo");
-            Task<System.IO.Stream> t =  client.GetStreamAsync("https://api.github.com/orgs/dotnet/repos");
-
-            
+                var stringTask = client.GetStringAsync("api/todo/isalive");
+         //   Task<System.IO.Stream> t =  client.GetStreamAsync("https://api.github.com/orgs/dotnet/repos");
 
             var msg = await stringTask;
-                Console.Write(msg);
-
-               // await response.Content.LoadIntoBufferAsync();
-                Console.WriteLine("test!");
-            //}
+            Console.Write(msg);
+            Console.WriteLine("test!");
+           
             
         }
 
@@ -75,5 +65,7 @@ namespace ConsoleApp1
 
             return handler.WriteToken(token);
         }
+
+      
     }
 }
