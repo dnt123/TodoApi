@@ -28,7 +28,9 @@ namespace ConsoleApp1
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
            
             Console.WriteLine(GenerateToken());
+            
             TestingToken().Wait();
+            TestingToken2NoAsync();
           
            
         }
@@ -36,13 +38,27 @@ namespace ConsoleApp1
         static async Task TestingToken()
         {
                 var stringTask = client.GetStringAsync("api/todo/isalive");
-         //   Task<System.IO.Stream> t =  client.GetStreamAsync("https://api.github.com/orgs/dotnet/repos");
+            //   Task<System.IO.Stream> t =  client.GetStreamAsync("https://api.github.com/orgs/dotnet/repos");
+            Console.WriteLine("1!");
+            Console.WriteLine("2!");
+            TestingToken2NoAsync();
+            Console.WriteLine("3!");
+            Console.WriteLine("4!");
 
             var msg = await stringTask;
             Console.Write(msg);
             Console.WriteLine("test!");
            
             
+        }
+
+    
+
+        static void TestingToken2NoAsync() {
+            var stringTask = client.GetStringAsync("api/todo/isalive");
+            //   Task<System.IO.Stream> t =  client.GetStreamAsync("https://api.github.com/orgs/dotnet/repos");
+            Console.Write(stringTask);
+            Console.WriteLine("test2!");
         }
 
         private static string GenerateToken()
