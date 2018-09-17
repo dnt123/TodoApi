@@ -5,12 +5,13 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Http;
 
 namespace ConsoleApp1
 {
     class Program
     {
-        static System.Net.Http.HttpClient client = new System.Net.Http.HttpClient();
+        static HttpClient client = new HttpClient();
 
         static void Main(string[] args)
         {
