@@ -15,6 +15,20 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
+            Anvandare.Builder builder = new Anvandare.Builder("Daniel","Nordkvissdf");
+            builder.PersonnummerMethod("1233445556");
+            Anvandare n = builder.Build();
+
+
+            Console.WriteLine(n.Efternamn + n.Fornamn + n.Personnummer);
+
+            Anvandare nutritionFacts = new Anvandare();
+            Console.WriteLine(nutritionFacts.Personnummer); 
+
+
+
+            /**
+
             Item todoItem = new Item();
             todoItem.Id = 1;
             todoItem.Name = "Name";
@@ -32,8 +46,8 @@ namespace ConsoleApp1
             
             TestingToken().Wait();
             TestingToken2NoAsync();
-          
-           
+          **/
+
         }
 
         static async Task TestingToken()
