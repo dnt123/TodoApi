@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -21,8 +22,6 @@ namespace TodoApi.Controllers
     {
         private readonly TodoContext _context;
         private readonly IConfiguration _configuration;
-
-        private string instanceTest = "hej";
 
 
         public TodoController(TodoContext context, IConfiguration configuration)
@@ -72,13 +71,16 @@ namespace TodoApi.Controllers
         [HttpGet]
         [Produces("application/json")]
         [Route("testing")]
+        //[FromServices] ISession session
         public ObjectResult Testing2()
         {
-            instanceTest = instanceTest + "1";
-            Console.WriteLine(instanceTest);
+            
+            var pathBase = HttpContext.Request.Path;
+            HttpContext.Session.Set("test", Encoding.ASCII.GetBytes("input"));
             ObjectResult o
-                 = new ObjectResult(instanceTest);
+                 = new ObjectResult(pathBase);
             //  o.Value = "skrivom";
+           
             return o;
         }
 

@@ -58,6 +58,7 @@ namespace TodoApi
                };
            });
 
+            services.AddSession();
 
 
         }
@@ -77,6 +78,7 @@ namespace TodoApi
             }
 
             app.UseHttpsRedirection();
+            app.UseSession();
             app.UseMvc();
            
         }
