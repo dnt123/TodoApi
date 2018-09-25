@@ -22,8 +22,8 @@ namespace ConsoleApp1
 
             Console.WriteLine(n.Efternamn + n.Fornamn + n.Personnummer);
 
-            Anvandare nutritionFacts = new Anvandare();
-            Console.WriteLine(nutritionFacts.Personnummer); 
+            Anvandare anvandare = new Anvandare();
+            Console.WriteLine(anvandare.Personnummer); 
 
 
 
