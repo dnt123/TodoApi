@@ -22,6 +22,8 @@ namespace TodoApi.Controllers
         private readonly TodoContext _context;
         private readonly IConfiguration _configuration;
 
+        private string instanceTest = "hej";
+
 
         public TodoController(TodoContext context, IConfiguration configuration)
         {
@@ -38,12 +40,14 @@ namespace TodoApi.Controllers
 
 
         [HttpGet("sync")]
+        [Route("sync")]
         public IActionResult SyncGet()
         {
             return Ok();
         }
 
         [HttpGet("async")]
+        [Route("async")]
         public async Task<IActionResult> AsyncGet()
         {
             return Ok(await AccessTheWebAsync());
@@ -64,6 +68,20 @@ namespace TodoApi.Controllers
         {
             return _context.TodoItems.ToList();
         }
+
+        [HttpGet]
+        [Produces("application/json")]
+        [Route("testing")]
+        public ObjectResult Testing2()
+        {
+            instanceTest = instanceTest + "1";
+            Console.WriteLine(instanceTest);
+            ObjectResult o
+                 = new ObjectResult(instanceTest);
+            //  o.Value = "skrivom";
+            return o;
+        }
+
 
         [HttpGet]
         [Produces("application/json")]
