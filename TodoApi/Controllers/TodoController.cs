@@ -22,7 +22,7 @@ namespace TodoApi.Controllers
     {
         private readonly TodoContext _context;
         private readonly IConfiguration _configuration;
-
+        string test = "xxxxxxxxxXXXXXX";
 
         public TodoController(TodoContext context, IConfiguration configuration)
         {
@@ -49,6 +49,7 @@ namespace TodoApi.Controllers
         [Route("async")]
         public async Task<IActionResult> AsyncGet()
         {
+            Console.WriteLine("TESTD" + Thread.CurrentThread.ManagedThreadId);
             return Ok(await AccessTheWebAsync());
         }
 
@@ -179,15 +180,16 @@ namespace TodoApi.Controllers
         //  - The method name ends in "Async."  
         async Task<int> AccessTheWebAsync()
         {
+            Console.WriteLine("TESTA" + Thread.CurrentThread.ManagedThreadId);
             // You need to add a reference to System.Net.Http to declare client.  
             HttpClient client = new HttpClient();
-
+           
             // GetStringAsync returns a Task<string>. That means that when you await the  
             // task you'll get a string (urlContents).  
             Task<string> getStringTask = client.GetStringAsync("http://msdn.microsoft.com");
-
+ 
             // You can do work here that doesn't rely on the string from GetStringAsync.  
-            Console.WriteLine("TEST");
+            Console.WriteLine("TESTB"+Thread.CurrentThread.ManagedThreadId);
 
             // The await operator suspends AccessTheWebAsync.  
             //  - AccessTheWebAsync can't continue until getStringTask is complete.  
@@ -195,7 +197,9 @@ namespace TodoApi.Controllers
             //  - Control resumes here when getStringTask is complete.   
             //  - The await operator then retrieves the string result from getStringTask.  
             string urlContents = await getStringTask;
-
+            Console.WriteLine("TESTC" + Thread.CurrentThread.ManagedThreadId);
+            test = test + 111;
+            Console.WriteLine(test);
             // The return statement specifies an integer result.  
             // Any methods that are awaiting AccessTheWebAsync retrieve the length value.  
             return urlContents.Length;
