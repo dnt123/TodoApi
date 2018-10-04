@@ -82,7 +82,7 @@ namespace SyncController.Controllers
 
         public async Task<int> GetNumberAsync(int number)
         {
-            await Task.Delay(4000);
+            await Task.Delay(1000);
 
             if (number < 0)
             {
