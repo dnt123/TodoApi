@@ -197,6 +197,7 @@ namespace TodoApi.Controllers
             //  - Control resumes here when getStringTask is complete.   
             //  - The await operator then retrieves the string result from getStringTask.  
             string urlContents = await getStringTask;
+           
             Console.WriteLine("TESTC" + Thread.CurrentThread.ManagedThreadId);
             test = test + 111;
             Console.WriteLine(test);
