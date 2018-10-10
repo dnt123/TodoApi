@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -32,9 +34,21 @@ namespace SyncController.Controllers
 
         }
 
+        [HttpGet("invoke")]
+        public async Task Invoke([FromServices] IFileProvider fileProvider)
+        {
+            IFileInfo file = fileProvider.GetFileInfo("Models/jschema/json-schema.json");
+
+            using (var stream = file.CreateReadStream())
+            using (var reader = new StreamReader(stream))
+            {
+                var output = await reader.ReadToEndAsync();
+                await HttpContext.Response.WriteAsync(output.ToString());
+            }
+        }
+
 
         [HttpGet("sync")]
-        [Route("sync")]
         public IActionResult SyncGet()
         {
             _myDependency.WriteMessage("test");
@@ -42,7 +56,6 @@ namespace SyncController.Controllers
         }
 
         [HttpGet("async")]
-        [Route("async")]
         public async Task<IActionResult> AsyncGet()
         {
             Console.WriteLine("TESTD" + Thread.CurrentThread.ManagedThreadId);

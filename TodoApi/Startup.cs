@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace TodoApi
 {
@@ -33,6 +35,8 @@ namespace TodoApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IMyDependency, MyDependency>();
+            services.AddSingleton<IFileProvider>(
+                new PhysicalFileProvider(Directory.GetCurrentDirectory()));
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddDbContext<TodoContext>(opt =>
               opt.UseInMemoryDatabase("TodoList"));
