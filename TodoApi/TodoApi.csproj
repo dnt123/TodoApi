@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Models\jschema\json-schema.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Models\jschema\json-schema.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Client\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
