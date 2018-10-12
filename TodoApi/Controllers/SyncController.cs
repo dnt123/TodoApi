@@ -38,19 +38,20 @@ namespace SyncController.Controllers
         [HttpGet("invoke2"), Produces("application/json")]
         public async Task<string> Get()
         {
+
+            
             var assembly = Assembly.GetEntryAssembly();
             var resourceStream = assembly.GetManifestResourceStream("TodoApi.Models.jschema.json-schema.json");
             using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
             {
                 return await reader.ReadToEndAsync();
             }
+
         }
 
         [HttpGet("invoke")]
         public async Task Invoke([FromServices] IFileProvider fileProvider)
         {
-
-
 
             IFileInfo file = fileProvider.GetFileInfo("Models/jschema/json-schema.json");
 
@@ -61,6 +62,14 @@ namespace SyncController.Controllers
                 await HttpContext.Response.WriteAsync(output.ToString());
             }
         }
+
+        [HttpGet("redirect")]
+        public void Redirect()
+        {
+           
+            HttpContext.Response.Redirect("/api/sync/invoke2");
+        }
+
 
 
         [HttpGet("sync")]

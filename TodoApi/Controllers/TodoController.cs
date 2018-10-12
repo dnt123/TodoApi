@@ -30,7 +30,7 @@ namespace TodoApi.Controllers
 
         public TodoController(TodoContext context, IConfiguration configuration)
         {
-
+            
             _context = context;
             _configuration = configuration;
 

@@ -45,7 +45,7 @@ namespace TodoApi
             {
                 options.OutputFormatters.Add(new PdfFormatter());
             });
-
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            .AddJwtBearer(options =>
            {
