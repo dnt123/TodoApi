@@ -19,6 +19,8 @@ using System.Text;
 using System.IdentityModel.Tokens;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using System.Reflection;
+using MediatR;
 
 namespace TodoApi
 {
@@ -34,6 +36,7 @@ namespace TodoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddScoped<IMyDependency, MyDependency>();
             services.AddSingleton<IFileProvider>(
                 new PhysicalFileProvider(Directory.GetCurrentDirectory()));

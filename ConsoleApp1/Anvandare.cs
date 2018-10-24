@@ -6,9 +6,9 @@ namespace ConsoleApp1
 {
     public class Anvandare
     {
-        public string Fornamn { get; private set; }
-        public string Efternamn { get; private set; }
-        public string Personnummer { get; private set; }
+        public string Fornamn { get;  set; }
+        public string Efternamn { get;  set; }
+        public string Personnummer { get;  set; }
 
 
         public class Builder

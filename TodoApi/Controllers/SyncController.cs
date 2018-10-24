@@ -35,6 +35,10 @@ namespace SyncController.Controllers
 
         }
 
+        public SyncController()
+        {
+        }
+
         [HttpGet("invoke2"), Produces("application/json")]
         public async Task<string> Get()
         {
